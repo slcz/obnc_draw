@@ -1,0 +1,193 @@
+MODULE Draw;
+
+CONST
+    CANVAS_RESIZABLE*  = 1;
+    CANVAS_BORDERLESS* = 2;
+    CANVAS_FULLSCREEN* = 3;
+    CANVAS_HIGHDPI*    = 4;
+
+    VIEW_FIXED*        = 1;
+    VIEW_EXPAND*       = 2;
+    VIEW_SCLAE*        = 3;
+    VIEW_STRETCH*      = 4;
+
+    CENTER*            = 1;
+    TOP_LEFT*          = 2;
+    TOP_RIGHT*         = 3;
+    BOTTOM_LEFT*       = 4;
+    BOTTOM_RIGHT*      = 5;
+
+    MOUSE_DOWN*        = 1;
+    MOUSE_UP*          = 2;
+    MOUSE_SCROLL*      = 3;
+    MOUSE_MOVE*        = 4;
+
+    MOUSE_SCROLL_NORMAL*   = 1;
+    MOUSE_SCROLL_INVERTED* = 2;
+
+    MOUSE_LEFT*   = 1;
+    MOUSE_MIDDLE* = 2;
+    MOUSE_RIGHT*  = 3;
+    MOUSE_X1*     = 4;
+    MOUSE_X2*     = 5;
+
+TYPE
+    Pair* = RECORD x*, y* : INTEGER END;
+
+    Update* = PROCEDURE;
+    Render* = PROCEDURE;
+    Key* = PROCEDURE(key : INTEGER);
+    MouseEvent* = PROCEDURE(pos : Pair; btn : INTEGER; doubleclick : BOOLEAN);
+    MouseScrollEvent* = PROCEDURE(pos : Pair; dir : INTEGER; delta : Pair);
+    MouseMoveEvent* = PROCEDURE(pos : Pair; delta : Pair);
+
+    Color* = RECORD r*, g*, b*, a* : REAL END;
+    Point* = RECORD pos* : Pair; color* : Color END;
+    Text* = POINTER TO TextEmpty;
+    TextEmpty* = RECORD END;
+    Image* = POINTER TO ImageEmpty;
+    ImageEmpty* = RECORD END;
+
+PROCEDURE create*(
+    title : ARRAY OF CHAR;
+    size : Pair;
+    update : Update;
+    render : Render;
+    flag : SET
+);
+END create;
+
+PROCEDURE keydown*(fn : Key);
+END keydown;
+
+PROCEDURE keyheld*(fn : Key);
+END keyheld;
+
+PROCEDURE keyup*(fn : Key);
+END keyup;
+
+PROCEDURE mousedown*(fn : MouseEvent);
+END mousedown;
+
+PROCEDURE mouseup*(fn : MouseEvent);
+END mouseup;
+
+PROCEDURE mousescroll*(fn : MouseScrollEvent);
+END mousescroll;
+
+PROCEDURE mousemove*(fn : MouseMoveEvent);
+END mousemove;
+
+PROCEDURE viewsize*(size : Pair);
+END viewsize;
+
+PROCEDURE viewmode*(mode : INTEGER);
+END viewmode;
+
+PROCEDURE viewposition*(position : INTEGER);
+END viewposition;
+
+PROCEDURE vsync*(v : BOOLEAN);
+END vsync;
+
+PROCEDURE icon*(img : ARRAY OF CHAR);
+END icon;
+
+PROCEDURE loopms*(ms : INTEGER);
+END loopms;
+
+PROCEDURE delayms*(ms : INTEGER);
+END delayms;
+
+PROCEDURE fps*(fps : REAL);
+END fps;
+
+PROCEDURE fpscap*(cap : INTEGER);
+END fpscap;
+
+PROCEDURE show*();
+END show;
+
+PROCEDURE foreground*(color : Color);
+END foreground;
+
+PROCEDURE background*(color : Color);
+END background;
+
+PROCEDURE monotriangle*(p1 : Pair; p2 : Pair; p3 : Pair);
+END monotriangle;
+
+PROCEDURE triangle*(p1 : Point; p2 : Point; p3 : Point);
+END triangle;
+
+PROCEDURE monoquad*(p1 : Pair; p2 : Pair; p3 : Pair; p4 : Pair);
+END monoquad;
+
+PROCEDURE quad*(p1 : Point; p2 : Point; p3 : Point; p4 : Point);
+END quad;
+
+PROCEDURE monoline*(p1 : Pair; p2 : Pair; width : INTEGER);
+END monoline;
+
+PROCEDURE line*(p1 : Point; p2 : Point; width : INTEGER);
+END line;
+
+PROCEDURE monocircle*(center : Pair; radius : INTEGER);
+END monocircle;
+
+PROCEDURE circle*(center : Point; sectors: INTEGER; radius : INTEGER);
+END circle;
+
+PROCEDURE screenshot*(filepath : ARRAY OF CHAR);
+END screenshot;
+
+PROCEDURE close*();
+END close;
+
+PROCEDURE dispose*();
+END dispose;
+
+PROCEDURE textcreate*(text, font : ARRAY OF CHAR; fontsize : INTEGER): Text;
+RETURN NIL END textcreate;
+
+PROCEDURE textmove*(text : Text; position : Pair);
+END textmove;
+
+PROCEDURE textrotate*(text: Text; angle : INTEGER; center : INTEGER); 
+END textrotate;
+
+PROCEDURE textcolor*(text: Text; color : Color);
+END textcolor;
+
+PROCEDURE textlabel*(text: Text; label : ARRAY OF CHAR);
+END textlabel;
+
+PROCEDURE drawtext*(text: Text);
+END drawtext;
+
+PROCEDURE textdispose*(text: Text);
+END textdispose;
+
+PROCEDURE imagecreate*(image : ARRAY OF CHAR): Image;
+RETURN NIL END imagecreate;
+
+PROCEDURE imagemove*(image : Image; position : Pair);
+END imagemove;
+
+PROCEDURE imagesize*(image : Image; size : Pair);
+END imagesize;
+
+PROCEDURE imagerotate*(image : Image; angle : INTEGER; center : INTEGER);
+END imagerotate;
+
+PROCEDURE imagecolor*(image : Image; color : Color);
+END imagecolor;
+
+PROCEDURE drawimage*(image : Image);
+END drawimage;
+
+PROCEDURE imagedispose*(image : Image);
+END imagedispose;
+
+BEGIN
+END Draw.
